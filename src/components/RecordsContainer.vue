@@ -6,7 +6,15 @@
 
     <main>
 
-      
+      <div id="container-records">
+
+        <Record
+        v-for="record, i in records"
+        :key="i"
+        :details="record"
+        /> 
+
+      </div>
 
     </main>
 
@@ -14,8 +22,31 @@
 </template>
 
 <script>
+import axios from 'axios'
+import Record from '@/components/Record.vue'
+
 export default {
   name: 'RecordsContainer',
+  components: {
+    Record,
+  },
+  
+  data() {
+    return{
+      records: [],
+    }
+  },
+
+  created(){
+    axios
+    .get("https://flynn.boolean.careers/exercises/api/array/music")
+    .then((result) =>  {
+        this.records = result.data.response;
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
 }
 </script>
 
@@ -23,7 +54,7 @@ export default {
 <style scoped lang="scss">
   header{
     background-color: #2e3a46;
-    padding: 10px;
+    padding: 10px 20px;
 
     img{
       width: 50px;
@@ -32,5 +63,12 @@ export default {
   main{
     background-color: #1e2d3b;
     padding: 30px;
+  }
+
+  #container-records {
+    width: 70%;
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
   }
 </style>

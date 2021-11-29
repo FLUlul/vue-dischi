@@ -9,7 +9,7 @@
       <span>Select Genre: </span>
       <SelectGenre 
       @changeIt="selectedValue"
-      :arrayDetails="records"
+      :arrayDetails="filteredArrayFun"
       />
 
       <span>Select Artist: </span>
@@ -54,6 +54,7 @@ export default {
     return{
       records: [],
       savedValue: "",
+      filteredArray: [],
     }
   },
 
@@ -77,13 +78,24 @@ export default {
       return this.records.filter((item) => {
         return item.genre.toLowerCase().includes(this.savedValue.toLowerCase()) || item.author.toLowerCase().includes(this.savedValue.toLowerCase())
       })
+    },
+    filteredArrayFun() {
+      
+      this.records.forEach((element) => {
+        if(this.filteredArray.includes(element.genre)){
+          console.log("gia incluso");
+        }else{
+          this.filteredArray.push(element.genre)
+        }
+      })
+      return this.filteredArray
     }
   },
 
   methods:{
     selectedValue(valueImport){
       this.savedValue = valueImport;
-      console.log(this.savedValue);
+      /* console.log(this.savedValue); */
     }
   }
 }

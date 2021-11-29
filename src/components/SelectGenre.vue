@@ -1,7 +1,7 @@
 <template>
   <select v-model="valueOpz" @change="$emit('changeIt', valueOpz)">
     <option :value="'All'">All</option>
-    <option v-for="objDetails, i in arrayDetails" :key="i" :value="objDetails.genre">{{ objDetails.genre }}</option>
+    <option v-for="objDetails, i in arrayDetails" :key="i" :value="objDetails">{{ objDetails }}</option>
   </select>
 </template>
 

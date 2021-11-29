@@ -6,7 +6,17 @@
 
     <main>
 
-      <SelectGenre @changeIt="selectedValue"/>
+      <span>Select Genre: </span>
+      <SelectGenre 
+      @changeIt="selectedValue"
+      :arrayDetails="records"
+      />
+
+      <span>Select Artist: </span>
+      <SelectArtist 
+      @changeIt="selectedValue"
+      :arrayDetails="records"
+      />
 
 
       <div class="loading" v-if="records.length === 0">... Loading ...</div>
@@ -30,12 +40,14 @@
 import axios from 'axios'
 import Record from '@/components/Record.vue'
 import SelectGenre from '@/components/SelectGenre.vue'
+import SelectArtist from '@/components/SelectArtist.vue'
 
 export default {
   name: 'RecordsContainer',
   components: {
     Record,
     SelectGenre,
+    SelectArtist,
   },
   
   data() {
@@ -63,7 +75,7 @@ export default {
         return this.records
       } 
       return this.records.filter((item) => {
-        return item.genre.toLowerCase().includes(this.savedValue.toLowerCase())
+        return item.genre.toLowerCase().includes(this.savedValue.toLowerCase()) || item.author.toLowerCase().includes(this.savedValue.toLowerCase())
       })
     }
   },
@@ -91,10 +103,14 @@ export default {
     background-color: #1e2d3b;
     padding: 30px;
     text-align: center;
+    color: white;
+
+    span{
+      margin-left: 20px;
+    }
 
     .loading{
       text-align: center;
-      color: white;
       font-size: 50px;
     }
   }

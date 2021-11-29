@@ -6,10 +6,15 @@
 
     <main>
 
-      <div id="container-records">
+      <SelectGenre @changeIt="selectedValue"/>
+
+
+      <div class="loading" v-if="records.length === 0">... Loading ...</div>
+
+      <div id="container-records" v-else>
 
         <Record
-        v-for="record, i in records"
+        v-for="record, i in filteredRecords"
         :key="i"
         :details="record"
         /> 
@@ -24,16 +29,19 @@
 <script>
 import axios from 'axios'
 import Record from '@/components/Record.vue'
+import SelectGenre from '@/components/SelectGenre.vue'
 
 export default {
   name: 'RecordsContainer',
   components: {
     Record,
+    SelectGenre,
   },
   
   data() {
     return{
       records: [],
+      savedValue: "",
     }
   },
 
@@ -42,10 +50,29 @@ export default {
     .get("https://flynn.boolean.careers/exercises/api/array/music")
     .then((result) =>  {
         this.records = result.data.response;
+        /* console.log(this.records); */
     })
     .catch((error) => {
       console.log(error);
     })
+  },
+
+  computed: {
+    filteredRecords() {
+      if (this.savedValue === "All"){
+        return this.records
+      } 
+      return this.records.filter((item) => {
+        return item.genre.toLowerCase().includes(this.savedValue.toLowerCase())
+      })
+    }
+  },
+
+  methods:{
+    selectedValue(valueImport){
+      this.savedValue = valueImport;
+      /* console.log(this.savedValue); */
+    }
   }
 }
 </script>
@@ -63,6 +90,13 @@ export default {
   main{
     background-color: #1e2d3b;
     padding: 30px;
+    text-align: center;
+
+    .loading{
+      text-align: center;
+      color: white;
+      font-size: 50px;
+    }
   }
 
   #container-records {

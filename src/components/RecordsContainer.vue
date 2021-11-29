@@ -71,7 +71,7 @@ export default {
   methods:{
     selectedValue(valueImport){
       this.savedValue = valueImport;
-      /* console.log(this.savedValue); */
+      console.log(this.savedValue);
     }
   }
 }

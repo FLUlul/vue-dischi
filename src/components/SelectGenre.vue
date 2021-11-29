@@ -1,10 +1,10 @@
 <template>
   <select v-model="valueOpz" @change="$emit('changeIt', valueOpz)">
-    <option value="'All'">All</option>
-    <option value="'Rock'">Rock</option>
-    <option value="'Pop'">Pop</option>
-    <option value="'Jazz'">Jazz</option>
-    <option value="'Metal'">Metal</option>
+    <option :value="'All'">All</option>
+    <option :value="'Rock'">Rock</option>
+    <option :value="'Pop'">Pop</option>
+    <option :value="'Jazz'">Jazz</option>
+    <option :value="'Metal'">Metal</option>
   </select>
 </template>
 

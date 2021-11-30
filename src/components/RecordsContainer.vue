@@ -82,9 +82,7 @@ export default {
     filteredArrayFun() {
       
       this.records.forEach((element) => {
-        if(this.filteredArray.includes(element.genre)){
-          console.log("gia incluso");
-        }else{
+        if(!this.filteredArray.includes(element.genre)){
           this.filteredArray.push(element.genre)
         }
       })

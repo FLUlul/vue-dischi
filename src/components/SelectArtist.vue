@@ -1,7 +1,7 @@
 <template>
   <select v-model="valueOpz" @change="$emit('changeIt', valueOpz)">
     <option :value="'All'">All</option>
-    <option v-for="objDetails, i in arrayDetails" :key="i" :value="objDetails.author">{{ objDetails.author }}</option>
+    <option v-for="objDetails, i in arrayData" :key="i" :value="objDetails.author">{{ objDetails.author }}</option>
   </select>
 </template>
 
@@ -15,7 +15,7 @@ export default {
     
   },
   props: {
-      arrayDetails: Array,
+    arrayData: Array,
   }
 
 }

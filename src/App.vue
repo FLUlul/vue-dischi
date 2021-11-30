@@ -5,23 +5,26 @@
       <img src="./assets/spotify-logo.png" alt="logo spotify">
 
       <div>
+
         <span>Select Genre: </span>
         <SelectGenre 
         @changeIt="getSelectedValue"
         :arrayDetails="savedFilteredArr"
         />
 
-        <!-- <span>Select Artist: </span>
+        <span>Select Artist: </span>
         <SelectArtist 
-        @changeIt="selectedValue"
-        :arrayDetails="records"
-        /> -->
+        @changeIt="getSelectedValue"
+        :arrayData="savedDataArray"
+        />
+
       </div>
 
     </header>
 
     <RecordsContainer
     @loadIt="getFilteredArray"
+    @dataIt="getDataArray"
     :savedValue="savedValueOut"
     />
 
@@ -31,29 +34,34 @@
 <script>
 import RecordsContainer from './components/RecordsContainer.vue'
 import SelectGenre from '@/components/SelectGenre.vue'
-/* import SelectArtist from '@/components/SelectArtist.vue' */
+import SelectArtist from '@/components/SelectArtist.vue'
 
 export default {
   name: 'App',
   components: {
     RecordsContainer,
     SelectGenre,
-    /* SelectArtist, */
+    SelectArtist,
   },
   data() {
     return{
       savedValueOut: "",
       savedFilteredArr: [],
+      savedDataArray: [],
     }
   },
   methods:{
     getSelectedValue(valueImport){
-      this.savedValue = valueImport;
-      console.log(this.savedValue);
+      this.savedValueOut = valueImport;
+      /* console.log(this.savedValueOut); */
     },
     getFilteredArray(filteredArray){
       this.savedFilteredArr = filteredArray;
-      console.log(this.savedFilteredArr);
+      /* console.log(this.savedFilteredArr); */
+    },
+    getDataArray(dataArray){
+      this.savedDataArray = dataArray
+      console.log(this.savedDataArray);
     }
   }
 }
@@ -79,6 +87,10 @@ header{
   justify-content: space-between;
   align-items: center;
   color: white;
+
+    span{
+      margin-left: 20px;
+    }
 
   img{
     width: 50px;

@@ -1,7 +1,7 @@
 <template>
   <div id="container">
 
-    <main @onload="$emit('loadIt', filteredArray)">
+    <main>
 
       <div class="loading" v-if="records.length === 0">... Loading ...</div>
 
@@ -30,7 +30,7 @@ export default {
     Record,
   },
     props: {
-      savedValue: String,
+    savedValue: String,
   },
   
   data() {
@@ -46,6 +46,15 @@ export default {
     .then((result) =>  {
         this.records = result.data.response;
         /* console.log(this.records); */
+
+        this.records.forEach((element) => {
+          if(!this.filteredArray.includes(element.genre)){
+            this.filteredArray.push(element.genre)
+          }
+        })
+
+        this.$emit('loadIt', this.filteredArray)
+        this.$emit('dataIt', this.records)
     })
     .catch((error) => {
       console.log(error);
@@ -58,18 +67,9 @@ export default {
         return this.records
       } 
       return this.records.filter((item) => {
-        return item.genre.toLowerCase().includes(this.savedValue.toLowerCase()) /* || item.author.toLowerCase().includes(this.savedValue.toLowerCase()) */
+        return item.genre.toLowerCase().includes(this.savedValue.toLowerCase()) || item.author.toLowerCase().includes(this.savedValue.toLowerCase())
       })
     },
-    filteredArrayFun() {
-      
-      this.records.forEach((element) => {
-        if(!this.filteredArray.includes(element.genre)){
-          this.filteredArray.push(element.genre)
-        }
-      })
-      return this.filteredArray
-    }
   },
 }
 </script>
@@ -81,10 +81,6 @@ export default {
     padding: 30px;
     text-align: center;
     color: white;
-
-    span{
-      margin-left: 20px;
-    }
 
     .loading{
       text-align: center;

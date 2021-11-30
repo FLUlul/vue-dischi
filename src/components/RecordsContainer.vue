@@ -1,23 +1,7 @@
 <template>
   <div id="container">
-    <header>
-      <img src="../assets/spotify-logo.png" alt="logo spotify">
-    </header>
 
-    <main>
-
-      <span>Select Genre: </span>
-      <SelectGenre 
-      @changeIt="selectedValue"
-      :arrayDetails="filteredArrayFun"
-      />
-
-      <span>Select Artist: </span>
-      <SelectArtist 
-      @changeIt="selectedValue"
-      :arrayDetails="records"
-      />
-
+    <main @onload="$emit('loadIt', filteredArray)">
 
       <div class="loading" v-if="records.length === 0">... Loading ...</div>
 
@@ -39,21 +23,19 @@
 <script>
 import axios from 'axios'
 import Record from '@/components/Record.vue'
-import SelectGenre from '@/components/SelectGenre.vue'
-import SelectArtist from '@/components/SelectArtist.vue'
 
 export default {
   name: 'RecordsContainer',
   components: {
     Record,
-    SelectGenre,
-    SelectArtist,
+  },
+    props: {
+      savedValue: String,
   },
   
   data() {
     return{
       records: [],
-      savedValue: "",
       filteredArray: [],
     }
   },
@@ -76,7 +58,7 @@ export default {
         return this.records
       } 
       return this.records.filter((item) => {
-        return item.genre.toLowerCase().includes(this.savedValue.toLowerCase()) || item.author.toLowerCase().includes(this.savedValue.toLowerCase())
+        return item.genre.toLowerCase().includes(this.savedValue.toLowerCase()) /* || item.author.toLowerCase().includes(this.savedValue.toLowerCase()) */
       })
     },
     filteredArrayFun() {
@@ -89,26 +71,11 @@ export default {
       return this.filteredArray
     }
   },
-
-  methods:{
-    selectedValue(valueImport){
-      this.savedValue = valueImport;
-      /* console.log(this.savedValue); */
-    }
-  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  header{
-    background-color: #2e3a46;
-    padding: 10px 20px;
-
-    img{
-      width: 50px;
-    }
-  }
   main{
     background-color: #1e2d3b;
     padding: 30px;
